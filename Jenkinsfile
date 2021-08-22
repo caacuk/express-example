@@ -16,13 +16,21 @@ pipeline {
         }
 
         stage('build image') {
-            dockerImage = docker.build 'caacuk/express_example'
+            steps{
+                script {
+                    dockerImage = docker.build 'caacuk/express_example'
+                }
+            }
         }
         
         stage('deploy image') {
-            docker.withRegistry( '', "1" ) {
-                dockerImage.push("$BUILD_NUMBER")
-                dockerImage.push('latest') 
+            steps{
+                script {
+                    docker.withRegistry( '', "1" ) {
+                        dockerImage.push("$BUILD_NUMBER")
+                        dockerImage.push('latest') 
+                    }
+                }
             }
         }
     }
