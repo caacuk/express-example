@@ -4,7 +4,7 @@ pipeline {
         registryCredential = '1'
         dockerImage = ''
     }
-    agent any
+    agent none
     stages {
         stage('Install') {
             agent { 
