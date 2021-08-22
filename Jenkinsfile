@@ -1,5 +1,8 @@
 pipeline {
     environment {
+        imagename = 'caacuk/express_example'
+        registryUrl = 'docker.io'
+        registryCredential = '1'
         dockerImage = ''
     }
     agent none
@@ -18,15 +21,15 @@ pipeline {
         stage('build image') {
             steps{
                 script {
-                    dockerImage = docker.build 'caacuk/express_example'
+                    dockerImage = docker.build imagename
                 }
             }
         }
         
-        stage('deploy image') {
+        stage('push image') {
             steps{
                 script {
-                    docker.withRegistry( '', "1" ) {
+                    docker.withRegistry( registryUrl, registryCredential ) {
                         dockerImage.push("$BUILD_NUMBER")
                         dockerImage.push('latest') 
                     }
