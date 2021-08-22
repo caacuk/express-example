@@ -16,7 +16,6 @@ pipeline {
             agent {
                 docker {
                     image 'docker:19.03.8-dind'
-                    reuseNode true
                 }
             }
             steps {
