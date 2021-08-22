@@ -16,7 +16,7 @@ pipeline {
         }
 
         stage('build image') {
-            dockerImage = docker.build "caacuk/express_example"
+            dockerImage = docker.build 'caacuk/express_example'
         }
         
         stage('deploy image') {
