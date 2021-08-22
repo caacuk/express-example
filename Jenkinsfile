@@ -7,7 +7,7 @@ pipeline {
     }
     agent none
     stages {
-        stage('install') {
+        stage('Install') {
             agent { 
                 docker { 
                     image 'node:14-alpine' 
@@ -18,7 +18,7 @@ pipeline {
             }
         }
 
-        stage('build image') {
+        stage('Build Image') {
             steps{
                 script {
                     dockerImage = docker.build imagename
@@ -26,7 +26,7 @@ pipeline {
             }
         }
         
-        stage('push image') {
+        stage('Push Image') {
             steps{
                 script {
                     docker.withRegistry( registryUrl, registryCredential ) {
@@ -34,6 +34,13 @@ pipeline {
                         dockerImage.push('latest') 
                     }
                 }
+            }
+        }
+
+        stage('Remove Unused docker image') {
+            steps{
+                sh "docker rmi $imagename:$BUILD_NUMBER"
+                sh "docker rmi $imagename:latest"
             }
         }
     }
