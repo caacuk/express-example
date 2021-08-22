@@ -1,7 +1,6 @@
 pipeline {
     environment {
         imagename = 'caacuk/express_example'
-        registryUrl = 'docker.io'
         registryCredential = '1'
         dockerImage = ''
     }
@@ -29,7 +28,7 @@ pipeline {
         stage('Push Image') {
             steps{
                 script {
-                    docker.withRegistry( registryUrl, registryCredential ) {
+                    docker.withRegistry( '', registryCredential ) {
                         dockerImage.push("$BUILD_NUMBER")
                         dockerImage.push('latest') 
                     }
